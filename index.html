@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- =========================================================== -->
+  <!--  👇👇  CAMBIA SOLO LA URL DE ESTA LÍNEA (después de url=)  👇👇  -->
+  <meta http-equiv="refresh" id="destino" content="0; url=https://instagram.com/tu_cuenta">
+  <!--  👆👆  Eso es lo único que tocas para cambiar el destino  👆👆  -->
+  <!-- =========================================================== -->
+
+  <title>Redirigiendo…</title>
+  <script>
+    // No toques esto: lee el destino de la línea de arriba y redirige.
+    try {
+      var u = document.getElementById('destino').getAttribute('content').split('url=')[1];
+      document.getElementById('link') && (document.getElementById('link').href = u);
+      location.replace(u);
+    } catch (e) {}
+  </script>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      text-align:center;padding-top:60px;color:#333;background:#fafafa}
+    a{color:#6c3cff;font-weight:600}
+  </style>
+</head>
+<body>
+  <p>Redirigiendo…</p>
+  <p>Si no ocurre automáticamente, <a id="link" href="https://instagram.com/tu_cuenta">toca aquí</a>.</p>
+</body>
+</html>
