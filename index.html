@@ -3,22 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- =========================================================== -->
-  <!--  👇👇  CAMBIA SOLO LA URL DE ESTA LÍNEA (después de url=)  👇👇  -->
-  <meta http-equiv="refresh" id="destino" content="0; url=https://linktr.ee/Hipermedia.museo">
-  <!--  👆👆  Eso es lo único que tocas para cambiar el destino  👆👆  -->
-  <!-- =========================================================== -->
-
   <title>Redirigiendo…</title>
-  <script>
-    // No toques esto: lee el destino de la línea de arriba y redirige.
-    try {
-      var u = document.getElementById('destino').getAttribute('content').split('url=')[1];
-      document.getElementById('link') && (document.getElementById('link').href = u);
-      location.replace(u);
-    } catch (e) {}
-  </script>
+
+  <!-- ============================================================
+       PARA CAMBIAR EL DESTINO DEL QR: edita SOLO el archivo destino.txt
+       (no hace falta tocar este archivo).
+       ============================================================ -->
+
+  <!-- Solo si el celular tiene JavaScript desactivado (casi nunca) -->
+  <noscript><meta http-equiv="refresh" content="0; url=https://linktr.ee/Hipermedia.museo"></noscript>
+
   <style>
     body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
       text-align:center;padding-top:60px;color:#333;background:#fafafa}
@@ -27,6 +21,29 @@
 </head>
 <body>
   <p>Redirigiendo…</p>
-  <p>Si no ocurre automáticamente, <a id="link" href="https://instagram.com/tu_cuenta">toca aquí</a>.</p>
+  <p id="manual" hidden>Si no ocurre automáticamente, <a id="link" href="https://linktr.ee/Hipermedia.museo">toca aquí</a>.</p>
+
+  <script>
+    // No toques esto: lee destino.txt siempre fresco (sin caché) y redirige.
+    var RESPALDO = 'https://linktr.ee/Hipermedia.museo'; // se usa solo si destino.txt no carga
+    var link = document.getElementById('link');
+
+    function ir(url) {
+      link.href = url;
+      location.replace(url);
+    }
+
+    fetch('destino.txt?t=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then(function (txt) {
+        var url = txt.trim().split(/\s+/)[0];
+        if (!/^https?:\/\//i.test(url)) throw new Error('destino.txt no tiene un link válido');
+        ir(url);
+      })
+      .catch(function () { ir(RESPALDO); });
+
+    // Si en 3 segundos no se fue, muestra el botón manual
+    setTimeout(function () { document.getElementById('manual').hidden = false; }, 3000);
+  </script>
 </body>
 </html>
